@@ -4,7 +4,9 @@ package service;
 import model.Human;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class CollectionsDemo {
@@ -37,5 +39,20 @@ public class CollectionsDemo {
         listWithoutPerson.removeIf(e -> e.equals(person));
         
         return listWithoutPerson;
+    }
+    
+    
+    public static List<Set<Integer>> getNotIntersecting(List<Set<Integer>> sets, Set<Integer> set) {
+        List<Set<Integer>> notIntersecting = new ArrayList<>(sets.size());
+        
+        for (Set<Integer> s: sets) {
+            Set<Integer> intersection = new HashSet<>(s);
+            intersection.retainAll(set);
+            
+            if (intersection.size() == 0)
+                notIntersecting.add(s);
+        }
+        
+        return notIntersecting;
     }
 }
