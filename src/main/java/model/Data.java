@@ -3,9 +3,12 @@ package model;
 
 import error.JcfErrorCode;
 import error.JcfException;
+import util.DataIterator;
+
+import java.util.Iterator;
 
 
-public class Data {
+public class Data implements Iterable<Integer> {
     private String name;
     private Group[] groups;
     
@@ -41,5 +44,11 @@ public class Data {
     
     public int size() {
         return groups.length;
+    }
+    
+    
+    @Override
+    public Iterator<Integer> iterator() {
+        return new DataIterator(this);
     }
 }
