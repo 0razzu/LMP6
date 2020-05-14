@@ -64,7 +64,7 @@ public class CollectionsDemo {
             
             if (age == maxAge)
                 maxAged.add(e);
-
+            
             else if (age > maxAge) {
                 maxAge = age;
                 maxAged.clear();
@@ -82,5 +82,95 @@ public class CollectionsDemo {
         sortedSetOfPeople.addAll(people);
         
         return new ArrayList<>(sortedSetOfPeople);
+    }
+    
+    
+    public static Set<Human> filterPeopleByIds(Map<Integer, Human> people, Set<Integer> ids) {
+        Set<Human> filteredSet = new HashSet<>();
+        
+        for (Integer id: ids)
+            filteredSet.add(people.get(id));
+        
+        return filteredSet;
+    }
+    
+    
+    public static List<Integer> getAgedOver18Ids(Map<Integer, Human> people) {
+        List<Integer> agedOver18 = new ArrayList<>(people.size());
+        
+        for (Integer id: people.keySet())
+            if (people.get(id).getAge() >= 18)
+                agedOver18.add(id);
+        
+        return agedOver18;
+    }
+    
+    
+    public static Map<Integer, Integer> getAges(Map<Integer, Human> people) {
+        Map<Integer, Integer> ages = new HashMap<>(people.size());
+        
+        for (Integer id: people.keySet())
+            ages.put(id, people.get(id).getAge());
+        
+        return ages;
+    }
+    
+    
+    public static Map<Integer, List<Human>> getPeopleByAges(Set<Human> people) {
+        Map<Integer, List<Human>> peopleByAges = new HashMap<>();
+        
+        for (Human person: people) {
+            int age = person.getAge();
+            
+            if (peopleByAges.containsKey(age))
+                peopleByAges.get(age).add(person);
+            
+            else {
+                List<Human> list = new LinkedList<>();
+                
+                list.add(person);
+                peopleByAges.put(age, list);
+            }
+        }
+        
+        return peopleByAges;
+    }
+    
+    
+    public static Map<Integer, Map<Character, List<Human>>> getPeopleByAgeAndSecondNameFirstCharacter(Set<Human> people) {
+        Map<Integer, List<Human>> peopleByAges = getPeopleByAges(people);
+        Map<Integer, Map<Character, List<Human>>> peopleByAgeAndSecondNameFirstCharacter =
+                new HashMap<>(peopleByAges.size());
+        Comparator<Human> comparator = new FullNameHumanComparator<>().reversed();
+        
+        for (Integer age: peopleByAges.keySet()) {
+            List<Human> peopleOfCurrAge = peopleByAges.get(age);
+            
+            if (!peopleByAgeAndSecondNameFirstCharacter.containsKey(age))
+                peopleByAgeAndSecondNameFirstCharacter.put(age, new HashMap<>());
+            
+            for (Human person: peopleOfCurrAge) {
+                Map<Character, List<Human>> characterToPeopleMap = peopleByAgeAndSecondNameFirstCharacter.get(age);
+                char firstCharacter = person.getSecondName().charAt(0);
+                
+                if (characterToPeopleMap.containsKey(firstCharacter))
+                    characterToPeopleMap.get(firstCharacter).add(person);
+                
+                else {
+                    List<Human> list = new LinkedList<>();
+                    list.add(person);
+                    characterToPeopleMap.put(firstCharacter, list);
+                }
+            }
+        }
+        
+        for (Integer age: peopleByAgeAndSecondNameFirstCharacter.keySet()) {
+            Map<Character, List<model.Human>> peopleOfCurrAge = peopleByAgeAndSecondNameFirstCharacter.get(age);
+            
+            for (Character character: peopleByAgeAndSecondNameFirstCharacter.get(age).keySet())
+                peopleOfCurrAge.get(character).sort(comparator);
+        }
+        
+        return peopleByAgeAndSecondNameFirstCharacter;
     }
 }
