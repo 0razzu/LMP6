@@ -2,11 +2,9 @@ package service;
 
 
 import model.Human;
+import util.FullNameHumanComparator;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class CollectionsDemo {
@@ -54,5 +52,35 @@ public class CollectionsDemo {
         }
         
         return notIntersecting;
+    }
+    
+    
+    public static List<Human> getMaxAged(List<Human> people) {
+        List<Human> maxAged = new ArrayList<>(people.size());
+        int maxAge = 0;
+        
+        for (Human e: people) {
+            int age = e.getAge();
+            
+            if (age == maxAge)
+                maxAged.add(e);
+
+            else if (age > maxAge) {
+                maxAge = age;
+                maxAged.clear();
+                maxAged.add(e);
+            }
+        }
+        
+        return maxAged;
+    }
+    
+    
+    public static List<Human> getSortedListOfPeople(Set<Human> people) {
+        Set<Human> sortedSetOfPeople = new TreeSet<>(new FullNameHumanComparator<>());
+        
+        sortedSetOfPeople.addAll(people);
+        
+        return new ArrayList<>(sortedSetOfPeople);
     }
 }
