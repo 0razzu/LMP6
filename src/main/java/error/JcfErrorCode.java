@@ -6,6 +6,7 @@ public enum JcfErrorCode {
     NULL_SECOND_NAME("A second name cannot be null or empty"),
     NULL_DEPARTMENT("A department name cannot be null or empty"),
     NULL_PHONE_NUMBER("A phone number cannot be null or empty"),
+    NULL_GROUP_NAME("A group name cannot be null or empty"),
     NEGATIVE_AGE("Age cannot be negative"),
     PERSON_EXISTS("This person is already in the phone book"),
     PERSON_NOT_FOUND("This person is not in the phone book"),
