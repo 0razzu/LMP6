@@ -20,7 +20,7 @@ public class CollectionsDemo {
     
     
     public static List<Human> getPeopleWithPersonSecondName(List<Human> people, Human person) {
-        List<Human> peopleWithPersonSecondName = new ArrayList<>(people);
+        List<Human> peopleWithPersonSecondName = new ArrayList<>(people.size());
         String secondName = person.getSecondName();
         
         for (Human e: people)
