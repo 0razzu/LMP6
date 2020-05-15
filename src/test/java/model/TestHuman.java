@@ -84,7 +84,8 @@ public class TestHuman {
                 () -> assertNotEquals(person1, person3),
                 () -> assertNotEquals(person1, person4),
                 () -> assertNotEquals(person1, person5),
-                () -> assertNotEquals(person1, person6)
+                () -> assertNotEquals(person1, person6),
+                () -> assertNotEquals(person3, person5)
         );
     }
 }
