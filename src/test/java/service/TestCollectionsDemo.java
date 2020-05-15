@@ -142,7 +142,7 @@ public class TestCollectionsDemo {
     void testFilterPeopleByIds() {
         Set<Integer> ids0 = new HashSet<>();
         Set<Integer> ids1 = new HashSet<>(Arrays.asList(1, 0, 756, -93));
-    
+        
         Set<Human> expected = new HashSet<>(Arrays.asList(person1, person3, person4, student1));
         
         assertAll(
@@ -208,7 +208,7 @@ public class TestCollectionsDemo {
         HashSet<Human> set = new HashSet<>(peopleSet);
         set.add(person7);
         set.add(person8);
-    
+        
         Map<Integer, Map<Character, List<Human>>> expected = new HashMap<>(5);
         expected.put(20, new HashMap<>());
         expected.put(23, new HashMap<>());
@@ -224,7 +224,7 @@ public class TestCollectionsDemo {
         expected.get(15).put('И', Collections.singletonList(person5));
         expected.get(15).put('П', Collections.singletonList(person6));
         expected.get(17).put('П', Arrays.asList(student1, person7));
-    
+        
         Map<Integer, Map<Character, List<Human>>> actual = CollectionsDemo.getPeopleByAgeAndSecondNameFirstCharacter(set);
         
         assertEquals(expected, actual);
