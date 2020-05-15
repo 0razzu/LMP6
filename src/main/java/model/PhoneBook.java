@@ -4,10 +4,7 @@ package model;
 import error.JcfErrorCode;
 import error.JcfException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class PhoneBook {
@@ -44,9 +41,6 @@ public class PhoneBook {
         if (!data.containsKey(person))
             addPerson(person);
         
-        else if (data.get(person).contains(phoneNumber))
-            throw new JcfException(JcfErrorCode.PHONE_NUMBER_EXISTS);
-        
         data.get(person).add(phoneNumber);
     }
     
@@ -57,6 +51,11 @@ public class PhoneBook {
         
         if (!data.get(person).remove(phoneNumber))
             throw new JcfException(JcfErrorCode.PHONE_NUMBER_NOT_FOUND);
+    }
+    
+    
+    public Set<Human> getPeople() {
+        return data.keySet();
     }
     
     
