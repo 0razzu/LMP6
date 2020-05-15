@@ -4,6 +4,8 @@ package model;
 import error.JcfErrorCode;
 import error.JcfException;
 
+import java.util.Objects;
+
 
 public class Student extends Human {
     private String department;
@@ -31,5 +33,21 @@ public class Student extends Human {
     
     public String getDepartment() {
         return department;
+    }
+    
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+        if (!super.equals(o)) return false;
+        Student student = (Student) o;
+        return department.equals(student.department);
+    }
+    
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), department);
     }
 }
