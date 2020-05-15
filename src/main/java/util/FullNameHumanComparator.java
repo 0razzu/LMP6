@@ -18,6 +18,8 @@ public class FullNameHumanComparator<T extends Human> implements Comparator<T> {
                 o2.getFirstName(),
                 o2.getPatronymicName() == null? "" : o2.getPatronymicName());
         
-        return name1.compareTo(name2);
+        int res = name1.compareTo(name2);
+        
+        return res == 0? o1.getAge() - o2.getAge() : res;
     }
 }
