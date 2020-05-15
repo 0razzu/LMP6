@@ -55,11 +55,11 @@ public class CollectionsDemo {
     }
     
     
-    public static List<Human> getMaxAged(List<Human> people) {
-        List<Human> maxAged = new ArrayList<>(people.size());
+    public static <T extends Human> List<T> getMaxAged(List<T> people) {
+        List<T> maxAged = new ArrayList<>(people.size());
         int maxAge = 0;
         
-        for (Human e: people) {
+        for (T e: people) {
             int age = e.getAge();
             
             if (age == maxAge)
@@ -76,8 +76,8 @@ public class CollectionsDemo {
     }
     
     
-    public static List<Human> getSortedListOfPeople(Set<Human> people) {
-        Set<Human> sortedSetOfPeople = new TreeSet<>(new FullNameHumanComparator<>());
+    public static <T extends Human> List<T> getSortedListOfPeople(Set<T> people) {
+        Set<T> sortedSetOfPeople = new TreeSet<>(new FullNameHumanComparator<>());
         
         sortedSetOfPeople.addAll(people);
         
