@@ -6,7 +6,6 @@ import error.JcfException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class TestStudent {
@@ -38,7 +37,7 @@ public class TestStudent {
         } catch (JcfException e) {
             assertEquals(JcfErrorCode.NULL_DEPARTMENT, e.getErrorCode());
         }
-    
+        
         try {
             Student student2 = new Student("Rafael", "Strike", 32, "");
             fail("student2");

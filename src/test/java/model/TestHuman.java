@@ -35,7 +35,7 @@ public class TestHuman {
         } catch (JcfException e) {
             assertEquals(JcfErrorCode.NULL_FIRST_NAME, e.getErrorCode());
         }
-    
+        
         try {
             Human person2 = new Human("", "Андреевна", "Петрова", 32);
             fail("person2");
@@ -44,21 +44,21 @@ public class TestHuman {
         }
         
         assertDoesNotThrow(() -> new Human("Анна", null, "Петрова", 35));
-    
+        
         try {
             Human person3 = new Human("Manuel", null, 21);
             fail("person3");
         } catch (JcfException e) {
             assertEquals(JcfErrorCode.NULL_SECOND_NAME, e.getErrorCode());
         }
-    
+        
         try {
             Human person4 = new Human("Kate", "", 16);
             fail("person4");
         } catch (JcfException e) {
             assertEquals(JcfErrorCode.NULL_SECOND_NAME, e.getErrorCode());
         }
-    
+        
         try {
             Human person5 = new Human("Josh", "Northwest", -1);
             fail("person5");
@@ -66,6 +66,7 @@ public class TestHuman {
             assertEquals(JcfErrorCode.NEGATIVE_AGE, e.getErrorCode());
         }
     }
+    
     
     @Test
     void testEquals() {

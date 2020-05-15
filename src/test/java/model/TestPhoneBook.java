@@ -4,10 +4,8 @@ package model;
 import error.JcfErrorCode;
 import error.JcfException;
 import org.junit.jupiter.api.Test;
-import service.CollectionsDemo;
 
 import java.util.*;
-import java.util.jar.JarException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,7 +33,7 @@ public class TestPhoneBook {
         
         phoneBook.addPerson(person1);
         phoneBook.addPerson(person2);
-    
+        
         Set<Human> people = phoneBook.getPeople();
         
         assertTrue(people.contains(person1) && people.contains(person2));
@@ -65,7 +63,7 @@ public class TestPhoneBook {
         } catch (JcfException e) {
             assertEquals(JcfErrorCode.PERSON_NOT_FOUND, e.getErrorCode());
         }
-    
+        
         try {
             List<String> numbers = phoneBook.getNumbers(person1);
         } catch (JcfException e) {
@@ -107,14 +105,14 @@ public class TestPhoneBook {
         } catch (JcfException e) {
             assertEquals(JcfErrorCode.NULL_PHONE_NUMBER, e.getErrorCode());
         }
-    
+        
         try {
             phoneBook.addPhoneNumber(person1, "");
             fail("\"\"");
         } catch (JcfException e) {
             assertEquals(JcfErrorCode.NULL_PHONE_NUMBER, e.getErrorCode());
         }
-    
+        
         try {
             phoneBook.addPhoneNumber(person1, phone3);
             fail("existing phone number");
@@ -166,13 +164,13 @@ public class TestPhoneBook {
         } catch (JcfException e) {
             assertEquals(JcfErrorCode.PERSON_NOT_FOUND, e.getErrorCode());
         }
-    
+        
         try {
             phoneBook.delPhoneNumber(person2, phone2);
         } catch (JcfException e) {
             assertEquals(JcfErrorCode.PHONE_NUMBER_NOT_FOUND, e.getErrorCode());
         }
-    
+        
         try {
             phoneBook.delPhoneNumber(person2, phone4);
         } catch (JcfException e) {
