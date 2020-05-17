@@ -2,7 +2,7 @@ package error;
 
 
 public class JcfException extends RuntimeException {
-    private JcfErrorCode errorCode;
+    private final JcfErrorCode errorCode;
     
     
     public JcfException(JcfErrorCode errorCode) {
@@ -12,5 +12,11 @@ public class JcfException extends RuntimeException {
     
     public JcfErrorCode getErrorCode() {
         return errorCode;
+    }
+    
+    
+    @Override
+    public String getMessage() {
+        return errorCode.getErrorString();
     }
 }
