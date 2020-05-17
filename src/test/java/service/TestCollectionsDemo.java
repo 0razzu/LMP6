@@ -118,10 +118,10 @@ public class TestCollectionsDemo {
         List<Student> list4 = Arrays.asList(student1, student2);
         
         assertAll(
-                () -> assertEquals(Arrays.asList(person1, person2), CollectionsDemo.getMaxAged(list1)),
-                () -> assertEquals(Collections.singletonList(person3), CollectionsDemo.getMaxAged(list2)),
-                () -> assertEquals(Arrays.asList(person3, student2), CollectionsDemo.getMaxAged(list3)),
-                () -> assertEquals(Collections.singletonList(student2), CollectionsDemo.getMaxAged(list4))
+                () -> assertEquals(new HashSet<>(Arrays.asList(person1, person2)), CollectionsDemo.getMaxAged(list1)),
+                () -> assertEquals(Collections.singleton(person3), CollectionsDemo.getMaxAged(list2)),
+                () -> assertEquals(new HashSet<>(Arrays.asList(person3, student2)), CollectionsDemo.getMaxAged(list3)),
+                () -> assertEquals(Collections.singleton(student2), CollectionsDemo.getMaxAged(list4))
         );
     }
     

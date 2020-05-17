@@ -55,8 +55,8 @@ public class CollectionsDemo {
     }
     
     
-    public static <T extends Human> List<T> getMaxAged(List<T> people) {
-        List<T> maxAged = new ArrayList<>(people.size());
+    public static <T extends Human> Set<T> getMaxAged(List<T> people) {
+        Set<T> maxAged = new HashSet<>(people.size());
         int maxAge = 0;
         
         for (T e: people) {
