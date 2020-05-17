@@ -34,4 +34,24 @@ public class TestGroup {
             assertEquals(JcfErrorCode.NULL_GROUP_DATA, e.getErrorCode());
         }
     }
+    
+    
+    @Test
+    void testEquals() {
+        Group group1 = new Group(1, 1, 2, -3);
+        Group group2 = new Group(1, 1, 2, -3);
+        Group group3 = new Group(0, 1, 2, -3);
+        Group group4 = new Group(1);
+        Group group5 = new Group(1, 1, 2, 3);
+        
+        assertAll(
+                () -> assertEquals(group1, group1),
+                () -> assertEquals(group1, group2),
+                () -> assertEquals(group2, group1),
+                () -> assertNotEquals(group1, ""),
+                () -> assertNotEquals(group1, group3),
+                () -> assertNotEquals(group1, group4),
+                () -> assertNotEquals(group1, group5)
+        );
+    }
 }

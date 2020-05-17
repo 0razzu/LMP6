@@ -4,6 +4,9 @@ package model;
 import error.JcfErrorCode;
 import error.JcfException;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 
 public class Group {
     private int id;
@@ -41,5 +44,23 @@ public class Group {
     
     public int size() {
         return data.length;
+    }
+    
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Group)) return false;
+        Group group = (Group) o;
+        return id == group.id &&
+                Arrays.equals(data, group.data);
+    }
+    
+    
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id);
+        result = 31 * result + Arrays.hashCode(data);
+        return result;
     }
 }
