@@ -5,7 +5,9 @@ import error.JcfErrorCode;
 import error.JcfException;
 import util.DataIterator;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Objects;
 
 
 public class Data implements Iterable<Integer> {
@@ -57,5 +59,23 @@ public class Data implements Iterable<Integer> {
     @Override
     public Iterator<Integer> iterator() {
         return new DataIterator(this);
+    }
+    
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Data)) return false;
+        Data data = (Data) o;
+        return name.equals(data.name) &&
+                Arrays.equals(groups, data.groups);
+    }
+    
+    
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(name);
+        result = 31 * result + Arrays.hashCode(groups);
+        return result;
     }
 }
