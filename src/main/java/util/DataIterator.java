@@ -4,10 +4,11 @@ package util;
 import model.Data;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 
 public class DataIterator implements Iterator<Integer> {
-    private Data data;
+    private final Data data;
     private int i;
     private int j;
     
@@ -21,7 +22,7 @@ public class DataIterator implements Iterator<Integer> {
     
     @Override
     public boolean hasNext() {
-        return i < data.size();
+        return (i < data.size() - 1) || (i == data.size() - 1 && j < data.getGroups()[i].size());
     }
     
     
@@ -33,7 +34,7 @@ public class DataIterator implements Iterator<Integer> {
         }
         
         if (i >= data.size())
-            return null;
+            throw new NoSuchElementException();
         
         return data.getGroups()[i].getData()[j++];
     }
