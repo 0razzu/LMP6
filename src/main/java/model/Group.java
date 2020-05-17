@@ -1,6 +1,10 @@
 package model;
 
 
+import error.JcfErrorCode;
+import error.JcfException;
+
+
 public class Group {
     private int id;
     private int[] data;
@@ -18,6 +22,9 @@ public class Group {
     
     
     public void setData(int... data) {
+        if (data == null)
+            throw new JcfException(JcfErrorCode.NULL_GROUP_DATA);
+        
         this.data = data;
     }
     

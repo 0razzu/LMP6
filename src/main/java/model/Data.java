@@ -21,7 +21,7 @@ public class Data implements Iterable<Integer> {
     
     public void setName(String name) {
         if (name == null || name.length() == 0)
-            throw new JcfException(JcfErrorCode.NULL_GROUP_NAME);
+            throw new JcfException(JcfErrorCode.NULL_DATA_NAME);
         
         this.name = name;
     }
