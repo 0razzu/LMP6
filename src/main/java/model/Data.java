@@ -27,7 +27,14 @@ public class Data implements Iterable<Integer> {
     }
     
     
-    public void setGroups(Group[] groups) {
+    public void setGroups(Group... groups) {
+        if (groups == null)
+            throw new JcfException(JcfErrorCode.NULL_DATA_GROUPS);
+        
+        for (Group group: groups)
+            if (group == null)
+                throw new JcfException(JcfErrorCode.NULL_DATA_GROUPS);
+        
         this.groups = groups;
     }
     

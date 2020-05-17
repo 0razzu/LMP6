@@ -8,6 +8,7 @@ public enum JcfErrorCode {
     NULL_PHONE_NUMBER("A phone number cannot be null or empty"),
     NULL_GROUP_DATA("Group data cannot be null"),
     NULL_DATA_NAME("A data name cannot be null or empty"),
+    NULL_DATA_GROUPS("Data groups & their elements cannot be null"),
     NEGATIVE_AGE("Age cannot be negative"),
     PERSON_EXISTS("This person is already in the phone book"),
     PERSON_NOT_FOUND("This person is not in the phone book"),
