@@ -29,4 +29,10 @@ public class TestDataDemo {
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6),
                 DataDemo.getAll(new Data("Some data", new Group(1, 1, 2, 3), new Group(2, 4, 5), new Group(3, 6))));
     }
+
+    @Test
+    void testDataDemo4() {
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6),
+                DataDemo.getAll(new Data("Some data", new Group(1, 1, 2, 3), new Group(2, 4, 5), new Group(3, 6), new Group(4))));
+    }
 }

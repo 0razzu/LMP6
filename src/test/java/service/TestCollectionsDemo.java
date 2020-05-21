@@ -10,6 +10,7 @@ import util.FullNameHumanComparator;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static service.CollectionsDemo.getListWithoutPerson;
 
 
 public class TestCollectionsDemo {
@@ -82,12 +83,16 @@ public class TestCollectionsDemo {
         
         assertAll(
                 () -> assertEquals(Arrays.asList(person2, person3, person2, student1, student1),
-                        CollectionsDemo.getListWithoutPerson(people, person1)),
+                        getListWithoutPerson(people, person1)),
                 () -> assertEquals(Arrays.asList(person1, person3, student1, student1),
-                        CollectionsDemo.getListWithoutPerson(people, person2)),
+                        getListWithoutPerson(people, person2)),
                 () -> assertEquals(Arrays.asList(person1, person2, person3, person2),
-                        CollectionsDemo.getListWithoutPerson(people, student1))
+                        getListWithoutPerson(people, student1))
         );
+
+        List<Human> res = getListWithoutPerson(people, person1);
+        person2.setAge(1555);
+        assertNotEquals(Arrays.asList(person2, person3, person2, student1, student1), res);
     }
     
     
@@ -135,6 +140,18 @@ public class TestCollectionsDemo {
                         CollectionsDemo.getSortedListOfPeople(peopleSet)),
                 () -> assertEquals(Arrays.asList(student2, student1), CollectionsDemo.getSortedListOfPeople(set))
         );
+
+
+        Human a1 = new Human("AAA", "CCC", 10);
+        Human a2 = new Human("AAA", "CCCC", 10);
+        Human a3 = new Human("AA", "CCCCA", 10);
+
+        Set<Human> as = new HashSet<>();
+        as.add(a1);
+        as.add(a2);
+        as.add(a3);
+
+        assertEquals(Arrays.asList(a1, a2, a3), CollectionsDemo.getSortedListOfPeople(as));
     }
     
     
@@ -142,12 +159,14 @@ public class TestCollectionsDemo {
     void testFilterPeopleByIds() {
         Set<Integer> ids0 = new HashSet<>();
         Set<Integer> ids1 = new HashSet<>(Arrays.asList(1, 0, 756, -93));
-        
+        Set<Integer> ids2 = new HashSet<>(Arrays.asList(1, 0, 756, -93, 88888888));
+
         Set<Human> expected = new HashSet<>(Arrays.asList(person1, person3, person4, student1));
         
         assertAll(
                 () -> assertEquals(new HashSet<>(), CollectionsDemo.filterPeopleByIds(peopleMap, ids0)),
-                () -> assertEquals(expected, CollectionsDemo.filterPeopleByIds(peopleMap, ids1))
+                () -> assertEquals(expected, CollectionsDemo.filterPeopleByIds(peopleMap, ids1)),
+                () -> assertEquals(expected, CollectionsDemo.filterPeopleByIds(peopleMap, ids2))
         );
     }
     

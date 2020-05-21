@@ -33,7 +33,13 @@ public class PhoneBook {
     public void addPhoneNumber(Human person, String phoneNumber) {
         if (phoneNumber == null || phoneNumber.length() == 0)
             throw new JcfException(JcfErrorCode.NULL_PHONE_NUMBER);
-        
+
+        /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+         Странная проверка. Один номер может принадлежать нескольким людям.
+         Понятно что с айпи телефонией и мобильной связью это все менее актуально,
+         но еще есть масса миниатс, у которых ограниченная емкость, поэтому номер может
+         быть один на кабинет, а телефонов там будет стоять щтуки четыре.
+        */
         for (List<String> numbers: data.values())
             if (numbers.contains(phoneNumber))
                 throw new JcfException(JcfErrorCode.PHONE_NUMBER_EXISTS);
@@ -44,7 +50,10 @@ public class PhoneBook {
         data.get(person).add(phoneNumber);
     }
     
-    
+    /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+     Не стоит кидать исключения, когда нет исключительной ситуации.
+     Вас попросили удалить номер, если удалять нечего, то можно просто выйти.
+    */
     public void delPhoneNumber(Human person, String phoneNumber) {
         if (!data.containsKey(person))
             throw new JcfException(JcfErrorCode.PERSON_NOT_FOUND);
@@ -58,7 +67,9 @@ public class PhoneBook {
         return data.keySet();
     }
     
-    
+   /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+    Еще одно не нужное исключение. Пустой список будет более адекватным результатом.
+   */
     public List<String> getNumbers(Human person) {
         if (!data.containsKey(person))
             throw new JcfException(JcfErrorCode.PERSON_NOT_FOUND);
@@ -66,7 +77,9 @@ public class PhoneBook {
         return data.get(person);
     }
     
-    
+    /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+     снова не нуное исключение. Ну и на одном номере может быть несколько человек см. выше.
+    */
     public Human getPerson(String phoneNumber) {
         for (Map.Entry<Human, List<String>> entry: data.entrySet())
             for (String number: entry.getValue())

@@ -18,7 +18,10 @@ public class CollectionsDemo {
         return counter;
     }
     
-    
+    /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+     Зачем выделять под список однофамильцев список с размером равным исходному?
+     Очевидно же, что однофамильцев меньше.
+    */
     public static List<Human> getPeopleWithPersonSecondName(List<Human> people, Human person) {
         List<Human> peopleWithPersonSecondName = new ArrayList<>(people.size());
         String secondName = person.getSecondName();
@@ -30,7 +33,10 @@ public class CollectionsDemo {
         return peopleWithPersonSecondName;
     }
     
-    
+    /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+     Не работает. Из задания "При изменении элементов входного списка элементы выходного изменяться не должны".
+     Тест поправил.
+    */
     public static List<Human> getListWithoutPerson(List<Human> people, Human person) {
         List<Human> listWithoutPerson = new ArrayList<>(people);
         
@@ -54,7 +60,10 @@ public class CollectionsDemo {
         return notIntersecting;
     }
     
-    
+    /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+     Тоже не очевидно, что размер результата будет сравним с исходниным списком.
+     Возрастную пирамиду видели? Лет до 60 люди достаточно плотно распредлены.
+    */
     public static <T extends Human> Set<T> getMaxAged(List<T> people) {
         Set<T> maxAged = new HashSet<>(people.size());
         int maxAge = 0;
@@ -75,7 +84,9 @@ public class CollectionsDemo {
         return maxAged;
     }
     
-    
+    /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+     Не работает. см. тест.
+    */
     public static <T extends Human> List<T> getSortedListOfPeople(Set<T> people) {
         Set<T> sortedSetOfPeople = new TreeSet<>(new FullNameHumanComparator<>());
         
@@ -84,7 +95,9 @@ public class CollectionsDemo {
         return new ArrayList<>(sortedSetOfPeople);
     }
     
-    
+    /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+     Не работает. См. тест.
+    */
     public static Set<Human> filterPeopleByIds(Map<Integer, Human> people, Set<Integer> ids) {
         Set<Human> filteredSet = new HashSet<>();
         
@@ -105,10 +118,17 @@ public class CollectionsDemo {
         return agedOver18;
     }
     
-    
+
+    /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+     Еще есть набор ключ-значение people.entrySet()
+     Экономия скобочек как-нибудь вас накажет - я не видел еще ни одного руководства по стилю,
+     где поощряется ваш стиль )
+
+     Вот стиль гугля https://google.github.io/styleguide/javaguide.html#s4.1-braces
+    */
     public static Map<Integer, Integer> getAges(Map<Integer, Human> people) {
         Map<Integer, Integer> ages = new HashMap<>(people.size());
-        
+
         for (Integer id: people.keySet())
             ages.put(id, people.get(id).getAge());
         
@@ -136,19 +156,28 @@ public class CollectionsDemo {
         return peopleByAges;
     }
     
-    
+
+    /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+     Не работает по тем же причинам, что и 6-ое задание.
+    */
     public static Map<Integer, Map<Character, List<Human>>> getPeopleByAgeAndSecondNameFirstCharacter(Set<Human> people) {
         Map<Integer, List<Human>> peopleByAges = getPeopleByAges(people);
         Map<Integer, Map<Character, List<Human>>> peopleByAgeAndSecondNameFirstCharacter =
                 new HashMap<>(peopleByAges.size());
+        /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+         Компаратор понадобится только в конце процедуры. Зачем вы его объявляете здесь?
+        */
         Comparator<Human> comparator = new FullNameHumanComparator<>().reversed();
         
         for (Integer age: peopleByAges.keySet()) {
             List<Human> peopleOfCurrAge = peopleByAges.get(age);
-            
+
+            /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+             бессмысленная проверка, срабатывающая всегда
+            */
             if (!peopleByAgeAndSecondNameFirstCharacter.containsKey(age))
                 peopleByAgeAndSecondNameFirstCharacter.put(age, new HashMap<>());
-            
+
             for (Human person: peopleOfCurrAge) {
                 Map<Character, List<Human>> characterToPeopleMap = peopleByAgeAndSecondNameFirstCharacter.get(age);
                 char firstCharacter = person.getSecondName().charAt(0);

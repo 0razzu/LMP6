@@ -25,6 +25,9 @@ public class Group {
     
     
     public void setData(int... data) {
+        /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+         на некорректные аргументы обычно кидают IllegalArgumentException
+        */
         if (data == null)
             throw new JcfException(JcfErrorCode.NULL_GROUP_DATA);
         
