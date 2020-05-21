@@ -22,20 +22,20 @@ public class DataIterator implements Iterator<Integer> {
     
     @Override
     public boolean hasNext() {
-        return (i < data.size() - 1) || (i == data.size() - 1 && j < data.getGroups()[i].size());
+        while (i < data.size() && j >= data.getGroups()[i].size()) {
+            i++;
+            j = 0;
+        }
+    
+        return i < data.size();
     }
     
     
     @Override
     public Integer next() {
-        while (i < data.size() && j >= data.getGroups()[i].size()) {
-            i++;
-            j = 0;
-        }
-        
-        if (i >= data.size())
-            throw new NoSuchElementException();
-        
-        return data.getGroups()[i].getData()[j++];
+        if (hasNext())
+            return data.getGroups()[i].getData()[j++];
+    
+        throw new NoSuchElementException();
     }
 }

@@ -9,6 +9,11 @@ import java.util.List;
 /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
  Не работает. Итератор должен уметь ходить по пустым группам.
 */
+
+// fixed
+
+
+
 public class DataDemo {
     public static List<Integer> getAll(Data data) {
         List<Integer> all = new LinkedList<>();
