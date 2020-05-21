@@ -209,7 +209,7 @@ public class CollectionsDemo {
                 }
             }
         }
-    
+        
         Comparator<Human> comparator = new FullNameHumanComparator<>().reversed();
         
         for (Integer age: peopleByAgeAndSecondNameFirstCharacter.keySet()) {

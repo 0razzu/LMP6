@@ -1,10 +1,9 @@
 package model;
 
 
-import error.JcfErrorCode;
-import error.JcfException;
 import org.junit.jupiter.api.Test;
 
+import static error.IllegalArgumentMessage.NULL_DEPARTMENT;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -34,15 +33,15 @@ public class TestStudent {
         try {
             Student student1 = new Student("Анастасия", "Андреевна", "Петрова", 17, null);
             fail("student1");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_DEPARTMENT, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_DEPARTMENT, e.getMessage());
         }
         
         try {
             Student student2 = new Student("Rafael", "Strike", 32, "");
             fail("student2");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_DEPARTMENT, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_DEPARTMENT, e.getMessage());
         }
     }
     

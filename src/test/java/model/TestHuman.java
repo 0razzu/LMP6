@@ -1,10 +1,9 @@
 package model;
 
 
-import error.JcfErrorCode;
-import error.JcfException;
 import org.junit.jupiter.api.Test;
 
+import static error.IllegalArgumentMessage.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -32,15 +31,15 @@ public class TestHuman {
         try {
             Human person1 = new Human(null, "Андреевна", "Петрова", 32);
             fail("person1");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_FIRST_NAME, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_FIRST_NAME, e.getMessage());
         }
         
         try {
             Human person2 = new Human("", "Андреевна", "Петрова", 32);
             fail("person2");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_FIRST_NAME, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_FIRST_NAME, e.getMessage());
         }
         
         assertDoesNotThrow(() -> new Human("Анна", null, "Петрова", 35));
@@ -48,22 +47,22 @@ public class TestHuman {
         try {
             Human person3 = new Human("Manuel", null, 21);
             fail("person3");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_SECOND_NAME, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_SECOND_NAME, e.getMessage());
         }
         
         try {
             Human person4 = new Human("Kate", "", 16);
             fail("person4");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_SECOND_NAME, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_SECOND_NAME, e.getMessage());
         }
         
         try {
             Human person5 = new Human("Josh", "Northwest", -1);
             fail("person5");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NEGATIVE_AGE, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NEGATIVE_AGE, e.getMessage());
         }
     }
     

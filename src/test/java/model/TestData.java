@@ -1,12 +1,12 @@
 package model;
 
 
-import error.JcfErrorCode;
-import error.JcfException;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
+import static error.IllegalArgumentMessage.NULL_DATA_GROUPS;
+import static error.IllegalArgumentMessage.NULL_DATA_NAME;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -32,29 +32,29 @@ public class TestData {
         try {
             Data data1 = new Data("");
             fail("data1");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_DATA_NAME, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_DATA_NAME, e.getMessage());
         }
         
         try {
             Data data2 = new Data(null);
             fail("data2");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_DATA_NAME, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_DATA_NAME, e.getMessage());
         }
         
         try {
             Data data3 = new Data("Null data set", (Group[]) null);
             fail("data3");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_DATA_GROUPS, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_DATA_GROUPS, e.getMessage());
         }
         
         try {
             Data data4 = new Data("Some data set", new Group(5, 5), null, new Group(1));
             fail("data4");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_DATA_GROUPS, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_DATA_GROUPS, e.getMessage());
         }
     }
     

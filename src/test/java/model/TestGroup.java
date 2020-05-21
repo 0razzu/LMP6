@@ -1,10 +1,9 @@
 package model;
 
 
-import error.JcfErrorCode;
-import error.JcfException;
 import org.junit.jupiter.api.Test;
 
+import static error.IllegalArgumentMessage.NULL_GROUP_DATA;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -30,8 +29,8 @@ public class TestGroup {
         try {
             Group group = new Group(3, (int[]) null);
             fail();
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_GROUP_DATA, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_GROUP_DATA, e.getMessage());
         }
     }
     

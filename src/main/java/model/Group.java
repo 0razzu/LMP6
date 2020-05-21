@@ -1,8 +1,7 @@
 package model;
 
 
-import error.JcfErrorCode;
-import error.JcfException;
+import error.IllegalArgumentMessage;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -28,8 +27,9 @@ public class Group {
         /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
          на некорректные аргументы обычно кидают IllegalArgumentException
         */
+        //fixed
         if (data == null)
-            throw new JcfException(JcfErrorCode.NULL_GROUP_DATA);
+            throw new IllegalArgumentException(IllegalArgumentMessage.NULL_GROUP_DATA);
         
         this.data = data;
     }

@@ -1,8 +1,7 @@
 package model;
 
 
-import error.JcfErrorCode;
-import error.JcfException;
+import error.IllegalArgumentMessage;
 
 import java.util.Objects;
 
@@ -29,7 +28,7 @@ public class Human implements Cloneable {
     
     public void setFirstName(String firstName) {
         if (firstName == null || firstName.length() == 0)
-            throw new JcfException(JcfErrorCode.NULL_FIRST_NAME);
+            throw new IllegalArgumentException(IllegalArgumentMessage.NULL_FIRST_NAME);
         
         this.firstName = firstName;
     }
@@ -42,7 +41,7 @@ public class Human implements Cloneable {
     
     public void setSecondName(String secondName) {
         if (secondName == null || secondName.length() == 0)
-            throw new JcfException(JcfErrorCode.NULL_SECOND_NAME);
+            throw new IllegalArgumentException(IllegalArgumentMessage.NULL_SECOND_NAME);
         
         this.secondName = secondName;
     }
@@ -50,7 +49,7 @@ public class Human implements Cloneable {
     
     public void setAge(int age) {
         if (age < 0)
-            throw new JcfException(JcfErrorCode.NEGATIVE_AGE);
+            throw new IllegalArgumentException(IllegalArgumentMessage.NEGATIVE_AGE);
         
         this.age = age;
     }

@@ -1,8 +1,7 @@
 package model;
 
 
-import error.JcfErrorCode;
-import error.JcfException;
+import error.IllegalArgumentMessage;
 
 import java.util.*;
 
@@ -18,21 +17,20 @@ public class PhoneBook {
     
     public void addPerson(Human person) {
         if (data.containsKey(person))
-            throw new JcfException(JcfErrorCode.PERSON_EXISTS);
+            throw new IllegalArgumentException(IllegalArgumentMessage.PERSON_EXISTS);
         
         data.put(person, new ArrayList<>());
     }
     
     
     public void delPerson(Human person) {
-        if (data.remove(person) == null)
-            throw new JcfException(JcfErrorCode.PERSON_NOT_FOUND);
+        data.remove(person);
     }
     
     
     public void addPhoneNumber(Human person, String phoneNumber) {
         if (phoneNumber == null || phoneNumber.length() == 0)
-            throw new JcfException(JcfErrorCode.NULL_PHONE_NUMBER);
+            throw new IllegalArgumentException(IllegalArgumentMessage.NULL_PHONE_NUMBER);
 
         /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
          Странная проверка. Один номер может принадлежать нескольким людям.
@@ -40,9 +38,7 @@ public class PhoneBook {
          но еще есть масса миниатс, у которых ограниченная емкость, поэтому номер может
          быть один на кабинет, а телефонов там будет стоять щтуки четыре.
         */
-        for (List<String> numbers: data.values())
-            if (numbers.contains(phoneNumber))
-                throw new JcfException(JcfErrorCode.PHONE_NUMBER_EXISTS);
+        // fixed
         
         if (!data.containsKey(person))
             addPerson(person);
@@ -50,16 +46,17 @@ public class PhoneBook {
         data.get(person).add(phoneNumber);
     }
     
+    
     /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
      Не стоит кидать исключения, когда нет исключительной ситуации.
      Вас попросили удалить номер, если удалять нечего, то можно просто выйти.
     */
+    // fixed
     public void delPhoneNumber(Human person, String phoneNumber) {
-        if (!data.containsKey(person))
-            throw new JcfException(JcfErrorCode.PERSON_NOT_FOUND);
+        List<String> numbers = data.get(person);
         
-        if (!data.get(person).remove(phoneNumber))
-            throw new JcfException(JcfErrorCode.PHONE_NUMBER_NOT_FOUND);
+        if (numbers != null)
+            numbers.remove(phoneNumber);
     }
     
     
@@ -67,26 +64,34 @@ public class PhoneBook {
         return data.keySet();
     }
     
-   /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
-    Еще одно не нужное исключение. Пустой список будет более адекватным результатом.
-   */
+    
+    /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
+     Еще одно не нужное исключение. Пустой список будет более адекватным результатом.
+    */
+    // fixed
     public List<String> getNumbers(Human person) {
-        if (!data.containsKey(person))
-            throw new JcfException(JcfErrorCode.PERSON_NOT_FOUND);
+        List<String> numbers = data.get(person);
         
-        return data.get(person);
+        return numbers == null? new ArrayList<>() : numbers;
     }
+    
     
     /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
      снова не нуное исключение. Ну и на одном номере может быть несколько человек см. выше.
     */
-    public Human getPerson(String phoneNumber) {
+    // fixed
+    public List<Human> getPeople(String phoneNumber) {
+        List<Human> people = new ArrayList<>();
+        
         for (Map.Entry<Human, List<String>> entry: data.entrySet())
             for (String number: entry.getValue())
-                if (number.equals(phoneNumber))
-                    return entry.getKey();
+                if (number.equals(phoneNumber)) {
+                    people.add(entry.getKey());
+                    
+                    break;
+                }
         
-        throw new JcfException(JcfErrorCode.PERSON_NOT_FOUND);
+        return people;
     }
     
     

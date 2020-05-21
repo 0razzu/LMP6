@@ -1,8 +1,7 @@
 package model;
 
 
-import error.JcfErrorCode;
-import error.JcfException;
+import error.IllegalArgumentMessage;
 
 import java.util.Objects;
 
@@ -25,7 +24,7 @@ public class Student extends Human {
     
     public void setDepartment(String department) {
         if (department == null || department.length() == 0)
-            throw new JcfException(JcfErrorCode.NULL_DEPARTMENT);
+            throw new IllegalArgumentException(IllegalArgumentMessage.NULL_DEPARTMENT);
         
         this.department = department;
     }

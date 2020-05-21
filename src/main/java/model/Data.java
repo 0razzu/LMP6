@@ -1,8 +1,7 @@
 package model;
 
 
-import error.JcfErrorCode;
-import error.JcfException;
+import error.IllegalArgumentMessage;
 import util.DataIterator;
 
 import java.util.Arrays;
@@ -23,7 +22,7 @@ public class Data implements Iterable<Integer> {
     
     public void setName(String name) {
         if (name == null || name.length() == 0)
-            throw new JcfException(JcfErrorCode.NULL_DATA_NAME);
+            throw new IllegalArgumentException(IllegalArgumentMessage.NULL_DATA_NAME);
         
         this.name = name;
     }
@@ -31,11 +30,11 @@ public class Data implements Iterable<Integer> {
     
     public void setGroups(Group... groups) {
         if (groups == null)
-            throw new JcfException(JcfErrorCode.NULL_DATA_GROUPS);
+            throw new IllegalArgumentException(IllegalArgumentMessage.NULL_DATA_GROUPS);
         
         for (Group group: groups)
             if (group == null)
-                throw new JcfException(JcfErrorCode.NULL_DATA_GROUPS);
+                throw new IllegalArgumentException(IllegalArgumentMessage.NULL_DATA_GROUPS);
         
         this.groups = groups;
     }

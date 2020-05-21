@@ -1,12 +1,13 @@
 package model;
 
 
-import error.JcfErrorCode;
-import error.JcfException;
 import org.junit.jupiter.api.Test;
+import util.FullNameHumanComparator;
 
 import java.util.*;
 
+import static error.IllegalArgumentMessage.NULL_PHONE_NUMBER;
+import static error.IllegalArgumentMessage.PERSON_EXISTS;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -40,8 +41,8 @@ public class TestPhoneBook {
         
         try {
             phoneBook.addPerson(person1);
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.PERSON_EXISTS, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(PERSON_EXISTS, e.getMessage());
         }
     }
     
@@ -56,19 +57,10 @@ public class TestPhoneBook {
         
         Set<Human> people = phoneBook.getPeople();
         
-        assertTrue(!people.contains(person1) && people.contains(person2));
-        
-        try {
-            phoneBook.delPerson(person1);
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.PERSON_NOT_FOUND, e.getErrorCode());
-        }
-        
-        try {
-            List<String> numbers = phoneBook.getNumbers(person1);
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.PERSON_NOT_FOUND, e.getErrorCode());
-        }
+        assertAll(
+                () -> assertTrue(!people.contains(person1) && people.contains(person2)),
+                () -> assertEquals(Collections.emptyList(), phoneBook.getNumbers(person1))
+        );
     }
     
     
@@ -83,10 +75,10 @@ public class TestPhoneBook {
         
         assertAll(
                 () -> assertEquals(Collections.singletonList(phone1), phoneBook.getNumbers(person1)),
-                () -> assertEquals(person1, phoneBook.getPerson(phone1)),
+                () -> assertEquals(Collections.singletonList(person1), phoneBook.getPeople(phone1)),
                 () -> assertEquals(Arrays.asList(phone2, phone3), phoneBook.getNumbers(person2)),
-                () -> assertEquals(person2, phoneBook.getPerson(phone2)),
-                () -> assertEquals(person2, phoneBook.getPerson(phone2))
+                () -> assertEquals(Collections.singletonList(person2), phoneBook.getPeople(phone2)),
+                () -> assertEquals(Collections.singletonList(person2), phoneBook.getPeople(phone3))
         );
     }
     
@@ -102,22 +94,15 @@ public class TestPhoneBook {
         try {
             phoneBook.addPhoneNumber(person1, null);
             fail("null");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_PHONE_NUMBER, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_PHONE_NUMBER, e.getMessage());
         }
         
         try {
             phoneBook.addPhoneNumber(person1, "");
             fail("\"\"");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.NULL_PHONE_NUMBER, e.getErrorCode());
-        }
-        
-        try {
-            phoneBook.addPhoneNumber(person1, phone3);
-            fail("existing phone number");
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.PHONE_NUMBER_EXISTS, e.getErrorCode());
+        } catch (IllegalArgumentException e) {
+            assertEquals(NULL_PHONE_NUMBER, e.getMessage());
         }
     }
     
@@ -136,46 +121,29 @@ public class TestPhoneBook {
         assertAll(
                 () -> assertEquals(Collections.emptyList(), phoneBook.getNumbers(person1)),
                 () -> assertTrue(phoneBook.getPeople().contains(person1)),
-                () -> assertEquals(Collections.singletonList(phone3), phoneBook.getNumbers(person2))
+                () -> assertEquals(Collections.singletonList(phone3), phoneBook.getNumbers(person2)),
+                () -> assertEquals(Collections.emptyList(), phoneBook.getPeople(phone1))
         );
-        
-        try {
-            Human person = phoneBook.getPerson(phone1);
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.PERSON_NOT_FOUND, e.getErrorCode());
-        }
     }
     
     
     @Test
-    void testDelPhoneNumberException() {
+    void testGetPeople() {
         PhoneBook phoneBook = new PhoneBook();
-        
         phoneBook.addPhoneNumber(person1, phone1);
-        phoneBook.addPhoneNumber(person2, phone2);
-        phoneBook.addPhoneNumber(person2, phone3);
-        phoneBook.addPhoneNumber(person3, phone4);
+        phoneBook.addPhoneNumber(person2, phone1);
+        phoneBook.addPhoneNumber(person3, phone2);
+        phoneBook.addPhoneNumber(person4, phone1);
         
-        phoneBook.delPhoneNumber(person1, phone1);
-        phoneBook.delPhoneNumber(person2, phone2);
+        List<Human> expected = Arrays.asList(person2, person4, person1);
+        List<Human> actual = phoneBook.getPeople(phone1);
+        actual.sort(new FullNameHumanComparator<Human>());
         
-        try {
-            phoneBook.delPhoneNumber(person4, phone1);
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.PERSON_NOT_FOUND, e.getErrorCode());
-        }
-        
-        try {
-            phoneBook.delPhoneNumber(person2, phone2);
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.PHONE_NUMBER_NOT_FOUND, e.getErrorCode());
-        }
-        
-        try {
-            phoneBook.delPhoneNumber(person2, phone4);
-        } catch (JcfException e) {
-            assertEquals(JcfErrorCode.PHONE_NUMBER_NOT_FOUND, e.getErrorCode());
-        }
+        assertAll(
+                () -> assertEquals(expected, actual),
+                () -> assertEquals(Collections.singletonList(person3), phoneBook.getPeople(phone2)),
+                () -> assertEquals(Collections.emptyList(), phoneBook.getPeople(phone3))
+        );
     }
     
     
@@ -204,7 +172,7 @@ public class TestPhoneBook {
                 () -> assertEquals(Collections.singleton(person1), phoneBook3.getPeople()),
                 () -> assertEquals(new HashSet<>(Arrays.asList(person3, person6, student1)), phoneBook4.getPeople()),
                 () -> assertEquals(Collections.emptyList(), phoneBook4.getNumbers(person6)),
-                () -> assertEquals(student1, phoneBook4.getPerson(phone7))
+                () -> assertEquals(Collections.singletonList(student1), phoneBook4.getPeople(phone7))
         );
     }
 }

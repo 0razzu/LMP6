@@ -26,7 +26,7 @@ public class DataIterator implements Iterator<Integer> {
             i++;
             j = 0;
         }
-    
+        
         return i < data.size();
     }
     
@@ -35,7 +35,7 @@ public class DataIterator implements Iterator<Integer> {
     public Integer next() {
         if (hasNext())
             return data.getGroups()[i].getData()[j++];
-    
+        
         throw new NoSuchElementException();
     }
 }
