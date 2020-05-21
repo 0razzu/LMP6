@@ -23,8 +23,9 @@ public class CollectionsDemo {
      Зачем выделять под список однофамильцев список с размером равным исходному?
      Очевидно же, что однофамильцев меньше.
     */
+    // fixed
     public static List<Human> getPeopleWithPersonSecondName(List<Human> people, Human person) {
-        List<Human> peopleWithPersonSecondName = new ArrayList<>(people.size());
+        List<Human> peopleWithPersonSecondName = new ArrayList<>();
         String secondName = person.getSecondName();
         
         for (Human e: people)
@@ -52,7 +53,7 @@ public class CollectionsDemo {
     
     
     public static List<Set<Integer>> getNotIntersecting(List<Set<Integer>> sets, Set<Integer> set) {
-        List<Set<Integer>> notIntersecting = new ArrayList<>(sets.size());
+        List<Set<Integer>> notIntersecting = new ArrayList<>();
         
         for (Set<Integer> s: sets) {
             Set<Integer> intersection = new HashSet<>(s);
@@ -70,8 +71,9 @@ public class CollectionsDemo {
      Тоже не очевидно, что размер результата будет сравним с исходниным списком.
      Возрастную пирамиду видели? Лет до 60 люди достаточно плотно распредлены.
     */
+    // fixed
     public static <T extends Human> Set<T> getMaxAged(List<T> people) {
-        Set<T> maxAged = new HashSet<>(people.size());
+        Set<T> maxAged = new HashSet<>();
         int maxAge = 0;
         
         for (T e: people) {
@@ -123,7 +125,7 @@ public class CollectionsDemo {
     
     
     public static List<Integer> getAgedOver18Ids(Map<Integer, Human> people) {
-        List<Integer> agedOver18 = new ArrayList<>(people.size());
+        List<Integer> agedOver18 = new ArrayList<>();
         
         for (Integer id: people.keySet())
             if (people.get(id).getAge() >= 18)
@@ -174,6 +176,7 @@ public class CollectionsDemo {
     /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
      Не работает по тем же причинам, что и 6-ое задание.
     */
+    // fixed
     public static Map<Integer, Map<Character, List<Human>>> getPeopleByAgeAndSecondNameFirstCharacter(Set<Human> people) {
         Map<Integer, List<Human>> peopleByAges = getPeopleByAges(people);
         Map<Integer, Map<Character, List<Human>>> peopleByAgeAndSecondNameFirstCharacter =
@@ -181,7 +184,7 @@ public class CollectionsDemo {
         /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
          Компаратор понадобится только в конце процедуры. Зачем вы его объявляете здесь?
         */
-        Comparator<Human> comparator = new FullNameHumanComparator<>().reversed();
+        // fixed
         
         for (Integer age: peopleByAges.keySet()) {
             List<Human> peopleOfCurrAge = peopleByAges.get(age);
@@ -189,8 +192,8 @@ public class CollectionsDemo {
             /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
              бессмысленная проверка, срабатывающая всегда
             */
-            if (!peopleByAgeAndSecondNameFirstCharacter.containsKey(age))
-                peopleByAgeAndSecondNameFirstCharacter.put(age, new HashMap<>());
+            // fixed
+            peopleByAgeAndSecondNameFirstCharacter.put(age, new HashMap<>());
             
             for (Human person: peopleOfCurrAge) {
                 Map<Character, List<Human>> characterToPeopleMap = peopleByAgeAndSecondNameFirstCharacter.get(age);
@@ -206,6 +209,8 @@ public class CollectionsDemo {
                 }
             }
         }
+    
+        Comparator<Human> comparator = new FullNameHumanComparator<>().reversed();
         
         for (Integer age: peopleByAgeAndSecondNameFirstCharacter.keySet()) {
             Map<Character, List<model.Human>> peopleOfCurrAge = peopleByAgeAndSecondNameFirstCharacter.get(age);
