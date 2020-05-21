@@ -18,6 +18,7 @@ public class CollectionsDemo {
         return counter;
     }
     
+    
     /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
      Зачем выделять под список однофамильцев список с размером равным исходному?
      Очевидно же, что однофамильцев меньше.
@@ -33,14 +34,18 @@ public class CollectionsDemo {
         return peopleWithPersonSecondName;
     }
     
+    
     /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
      Не работает. Из задания "При изменении элементов входного списка элементы выходного изменяться не должны".
      Тест поправил.
     */
-    public static List<Human> getListWithoutPerson(List<Human> people, Human person) {
-        List<Human> listWithoutPerson = new ArrayList<>(people);
+    // fixed
+    public static List<Human> getListWithoutPerson(List<Human> people, Human person) throws CloneNotSupportedException {
+        List<Human> listWithoutPerson = new ArrayList<>();
         
-        listWithoutPerson.removeIf(e -> e.equals(person));
+        for (Human p: people)
+            if (!p.equals(person))
+                listWithoutPerson.add(p.clone());
         
         return listWithoutPerson;
     }
@@ -59,6 +64,7 @@ public class CollectionsDemo {
         
         return notIntersecting;
     }
+    
     
     /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
      Тоже не очевидно, что размер результата будет сравним с исходниным списком.
@@ -84,9 +90,11 @@ public class CollectionsDemo {
         return maxAged;
     }
     
+    
     /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
      Не работает. см. тест.
     */
+    // fixed
     public static <T extends Human> List<T> getSortedListOfPeople(Set<T> people) {
         Set<T> sortedSetOfPeople = new TreeSet<>(new FullNameHumanComparator<>());
         
@@ -95,14 +103,20 @@ public class CollectionsDemo {
         return new ArrayList<>(sortedSetOfPeople);
     }
     
+    
     /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
      Не работает. См. тест.
     */
+    // fixed
     public static Set<Human> filterPeopleByIds(Map<Integer, Human> people, Set<Integer> ids) {
         Set<Human> filteredSet = new HashSet<>();
         
-        for (Integer id: ids)
-            filteredSet.add(people.get(id));
+        for (Integer id: ids) {
+            Human person = people.get(id);
+            
+            if (person != null)
+                filteredSet.add(person);
+        }
         
         return filteredSet;
     }
@@ -118,7 +132,7 @@ public class CollectionsDemo {
         return agedOver18;
     }
     
-
+    
     /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
      Еще есть набор ключ-значение people.entrySet()
      Экономия скобочек как-нибудь вас накажет - я не видел еще ни одного руководства по стилю,
@@ -128,7 +142,7 @@ public class CollectionsDemo {
     */
     public static Map<Integer, Integer> getAges(Map<Integer, Human> people) {
         Map<Integer, Integer> ages = new HashMap<>(people.size());
-
+        
         for (Integer id: people.keySet())
             ages.put(id, people.get(id).getAge());
         
@@ -156,7 +170,7 @@ public class CollectionsDemo {
         return peopleByAges;
     }
     
-
+    
     /* Филиппов А.В. 21.05.2020 Комментарий не удалять.
      Не работает по тем же причинам, что и 6-ое задание.
     */
@@ -177,7 +191,7 @@ public class CollectionsDemo {
             */
             if (!peopleByAgeAndSecondNameFirstCharacter.containsKey(age))
                 peopleByAgeAndSecondNameFirstCharacter.put(age, new HashMap<>());
-
+            
             for (Human person: peopleOfCurrAge) {
                 Map<Character, List<Human>> characterToPeopleMap = peopleByAgeAndSecondNameFirstCharacter.get(age);
                 char firstCharacter = person.getSecondName().charAt(0);

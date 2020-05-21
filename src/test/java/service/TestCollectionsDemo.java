@@ -78,7 +78,7 @@ public class TestCollectionsDemo {
     
     
     @Test
-    void testGetListWithoutPerson() {
+    void testGetListWithoutPerson() throws CloneNotSupportedException {
         List<Human> people = Arrays.asList(person1, person2, person3, person2, student1, student1);
         
         assertAll(
@@ -91,7 +91,9 @@ public class TestCollectionsDemo {
         );
 
         List<Human> res = getListWithoutPerson(people, person1);
+        
         person2.setAge(1555);
+        
         assertNotEquals(Arrays.asList(person2, person3, person2, student1, student1), res);
     }
     

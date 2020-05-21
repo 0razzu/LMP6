@@ -7,7 +7,7 @@ import error.JcfException;
 import java.util.Objects;
 
 
-public class Human {
+public class Human implements Cloneable {
     private String firstName;
     private String patronymicName;
     private String secondName;
@@ -73,6 +73,12 @@ public class Human {
     
     public int getAge() {
         return age;
+    }
+    
+    
+    @Override
+    public Human clone() throws CloneNotSupportedException {
+        return (Human) super.clone();
     }
     
     
